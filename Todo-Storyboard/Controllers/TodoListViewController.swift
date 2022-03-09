@@ -15,20 +15,7 @@ class TodoListViewController: UITableViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var newItem = Item()
-        newItem.title = "Find Sugar"
-        var newItem2 = Item()
-        newItem2.title = "Buy Eggs"
-        var newItem3 = Item()
-        newItem3.title = "Lorem ipsum"
-        itemsArray.append(newItem)
-        itemsArray.append(newItem2)
-        itemsArray.append(newItem3)
-        
-//        if let items = defaults.array(forKey: "TodoListArray") as? [Item] {
-//            itemsArray = items
-//        }
-        self.tableView.reloadData()
+        loadItems()
         
         title = "Todoey"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -98,6 +85,17 @@ class TodoListViewController: UITableViewController  {
         }
         
         self.tableView.reloadData()
+    }
+    
+    func loadItems() {
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do {
+                itemsArray = try decoder.decode([Item].self, from: data)
+            } catch {
+                print("Error decoding item array, \(error)")
+            }
+        }
     }
 }
 
