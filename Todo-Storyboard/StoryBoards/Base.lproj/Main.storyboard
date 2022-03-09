@@ -30,7 +30,13 @@
                             <outlet property="delegate" destination="HT0-hh-f0P" id="sqe-gn-Njw"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Nu4-bL-S8F"/>
+                    <navigationItem key="navigationItem" id="Nu4-bL-S8F">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="65T-6h-gZc">
+                            <connections>
+                                <action selector="addButtonTapped:" destination="HT0-hh-f0P" id="dl5-Mm-xb3"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ec-ne-wa7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
