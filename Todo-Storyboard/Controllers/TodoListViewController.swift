@@ -9,10 +9,16 @@ import UIKit
 
 class TodoListViewController: UITableViewController  {
     
+    let defaults = UserDefaults.standard
+    
     var itemArray = ["Find Sugar", "Buy Eggs", "Dribble NBA2k"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
+            itemArray = items
+        }
         
         title = "Todoey"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -56,6 +62,7 @@ class TodoListViewController: UITableViewController  {
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let action = UIAlertAction(title: "Add Item", style: .default) { action in
             self.itemArray.append(textField.text ?? "Placeholder")
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
             self.tableView.reloadData()
         }
         
