@@ -81,7 +81,7 @@ class TodoListViewController: UITableViewController  {
             let data = try encoder.encode(itemsArray)
             try data.write(to: dataFilePath!)
         } catch {
-            print("Error encoding item arra, \(error)")
+            print("Error encoding item array, \(error)")
         }
         
         self.tableView.reloadData()
