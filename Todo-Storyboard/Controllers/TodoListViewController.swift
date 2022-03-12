@@ -18,8 +18,8 @@ class TodoListViewController: UITableViewController {
 
         loadItems()
         
-        title = "Todoey"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        title = "Items"
+        //navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     //MARK: --> TableView Datasource Methods
