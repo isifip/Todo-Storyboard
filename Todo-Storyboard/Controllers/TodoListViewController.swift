@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class TodoListViewController: UITableViewController  {
+class TodoListViewController: UITableViewController {
     
     var itemsArray = [Item]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -41,6 +41,9 @@ class TodoListViewController: UITableViewController  {
     //MARK: --> TableView Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+//        context.delete(itemsArray[indexPath.row])
+//        itemsArray.remove(at: indexPath.row)
         
         itemsArray[indexPath.row].status.toggle()
         
@@ -92,10 +95,28 @@ class TodoListViewController: UITableViewController  {
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         do {
             itemsArray = try context.fetch(request)
-            
         } catch {
             print("Error fetching data from context: \(error)")
         }
+    }
+}
+
+//MARK: --> Search bar Methods
+extension TodoListViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        request.predicate  = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        
+        do {
+            itemsArray = try context.fetch(request)
+        } catch {
+            print("Error fetching query data from context: \(error)")
+        }
+        
+        tableView.reloadData()
     }
 }
 
