@@ -6,17 +6,18 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class TodoListViewController: UITableViewController {
     
-    var itemsArray = [Item]()
+    var todoItems: Results<Item>?
+    let realm = try! Realm()
+    
     var selectedCategory: Category? {
         didSet {
-            //loadItems()
+            loadItems()
         }
     }
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,15 +29,17 @@ class TodoListViewController: UITableViewController {
     //MARK: --> TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemsArray.count
+        return todoItems?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
-        let item = itemsArray[indexPath.row]
-        cell.textLabel?.text = item.title
-        
-        cell.accessoryType = item.status ? .checkmark : .none
+        if let item = todoItems?[indexPath.row] {
+            cell.textLabel?.text = item.title
+            cell.accessoryType = item.status ? .checkmark : .none
+        } else {
+            cell.textLabel?.text = "No Items Added"
+        }
 
         return cell
     }
@@ -48,9 +51,9 @@ class TodoListViewController: UITableViewController {
 //        context.delete(itemsArray[indexPath.row])
 //        itemsArray.remove(at: indexPath.row)
         
-        itemsArray[indexPath.row].status.toggle()
+        //todoItems[indexPath.row].status.toggle()
         
-        saveItems()
+        //saveItems(item: <#Item#>)
         
         tableView.deselectRow(at: indexPath, animated: false)
     }
@@ -65,13 +68,19 @@ class TodoListViewController: UITableViewController {
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let action = UIAlertAction(title: "Add Item", style: .default) { action in
             
-//            let newItem = Item(context: self.context)
-//            newItem.title = textField.text!
-//            newItem.status = false
-//            newItem.parentCategory = self.selectedCategory
-//            self.itemsArray.append(newItem)
+            if let currentCategory = self.selectedCategory {
+                do {
+                    try self.realm.write({
+                        let newItem = Item()
+                        newItem.title = textField.text!
+                        currentCategory.items.append(newItem)
+                    })
+                } catch {
+                    print("Error saving new items, \(error)")
+                }
+            }
             
-            self.saveItems()
+            self.tableView.reloadData()
         }
         
         alert.addAction(action)
@@ -85,33 +94,12 @@ class TodoListViewController: UITableViewController {
     }
     
     //MARK: --> Model Methods
-    func saveItems() {
-        do {
-            try context.save()
-        } catch {
-            print("Error saving context, \(error)")
-        }
+    func loadItems() {
         
+        todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
+
         tableView.reloadData()
     }
-    
-//    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
-//
-//        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
-//
-//        if let additionalPredicate = predicate {
-//            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
-//        } else {
-//            request.predicate = categoryPredicate
-//        }
-//
-//        do {
-//            itemsArray = try context.fetch(request)
-//        } catch {
-//            print("Error fetching data from context: \(error)")
-//        }
-//        tableView.reloadData()
-//    }
 }
 
 //MARK: --> Search bar Methods
