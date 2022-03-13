@@ -76,6 +76,7 @@ class TodoListViewController: UITableViewController {
                     try self.realm.write({
                         let newItem = Item()
                         newItem.title = textField.text!
+                        newItem.dateCreated = Date()
                         currentCategory.items.append(newItem)
                     })
                 } catch {
@@ -109,7 +110,10 @@ class TodoListViewController: UITableViewController {
 extension TodoListViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        todoItems = todoItems?.filter("title COINTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "title", ascending: true)
+        //todoItems = todoItems?.filter("title COINTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "title", ascending: true)
+        
+        //MARK: --> Sorting buy creation date
+        todoItems = todoItems?.filter("title COINTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
