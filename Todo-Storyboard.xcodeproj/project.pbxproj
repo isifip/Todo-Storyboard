@@ -16,6 +16,7 @@
 		C7C0806327D8C83C009C3B3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7C0806127D8C83C009C3B3E /* LaunchScreen.storyboard */; };
 		C7C7545627DDE23100052E66 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C7C7545527DDE23100052E66 /* Realm */; };
 		C7C7545827DDE23100052E66 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C7C7545727DDE23100052E66 /* RealmSwift */; };
+		C7C7545A27DDE2D400052E66 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C7545927DDE2D400052E66 /* Data.swift */; };
 		C7FD7E9127DCB14D0001185C /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FD7E9027DCB14D0001185C /* CategoryViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		C7C0805F27D8C83C009C3B3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C7C0806227D8C83C009C3B3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C7C0806427D8C83C009C3B3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C7C7545927DDE2D400052E66 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		C7FD7E9027DCB14D0001185C /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				C74E1A5E27DA439D003BBB4D /* DataModel.xcdatamodeld */,
+				C7C7545927DDE2D400052E66 /* Data.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -188,6 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7FD7E9127DCB14D0001185C /* CategoryViewController.swift in Sources */,
+				C7C7545A27DDE2D400052E66 /* Data.swift in Sources */,
 				C74E1A6027DA439D003BBB4D /* DataModel.xcdatamodeld in Sources */,
 				C7C0805B27D8C83B009C3B3E /* TodoListViewController.swift in Sources */,
 				C7C0805727D8C83B009C3B3E /* AppDelegate.swift in Sources */,
