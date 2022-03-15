@@ -7,8 +7,9 @@
 
 import UIKit
 import RealmSwift
+//import SwipeCellKit
 
-class TodoListViewController: UITableViewController {
+class TodoListViewController: SwipeTableViewController {
     
     var todoItems: Results<Item>?
     let realm = try! Realm()
@@ -33,7 +34,8 @@ class TodoListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+
         if let item = todoItems?[indexPath.row] {
             cell.textLabel?.text = item.title
             cell.accessoryType = item.status ? .checkmark : .none
@@ -59,6 +61,19 @@ class TodoListViewController: UITableViewController {
         }
         tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: false)
+    }
+    
+    //MARK: --> Update Model
+    override func updateModel(at indexPath: IndexPath) {
+        if let item = self.todoItems?[indexPath.row] {
+            do {
+                try self.realm.write({
+                    self.realm.delete(item)
+                })
+            } catch {
+                print("Error saving context, \(error)")
+            }
+        }
     }
     
     

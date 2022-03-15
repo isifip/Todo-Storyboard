@@ -21,8 +21,6 @@ class CategoryViewController: SwipeTableViewController {
         title = "Todoey"
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        tableView.rowHeight = 80
-        
         loadCategories()
         
     }
