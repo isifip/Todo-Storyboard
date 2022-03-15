@@ -7,7 +7,6 @@
 
 import UIKit
 import RealmSwift
-//import SwipeCellKit
 
 class CategoryViewController: SwipeTableViewController {
     
@@ -36,6 +35,12 @@ class CategoryViewController: SwipeTableViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories added yet"
+        
+        var colors = [UIColor.blue, UIColor.red, UIColor.green]
+        if let index = colors.randomElement() {
+            cell.backgroundColor = index
+            colors.removeAll(where: { $0 == index })
+        }
         
         return cell
     }
